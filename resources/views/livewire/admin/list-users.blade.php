@@ -22,7 +22,7 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                        <tr class="border-b border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-600">
+                        <tr class="{{ $loop->last === true ?: 'border-b' }} border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-600">
                             <td class="py-3 px-6">{{ $user->name }}</td>
                             <td class="py-3 px-6">{{ $user->email }}</td>
                             <td class="py-3 px-6">{{ $user->role->display() }}</td>
