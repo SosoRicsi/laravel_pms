@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\UserRoles;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -37,6 +38,13 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        User::create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => '$2y$12$uem9m4ib.G8yGmk7x20tQ..SprBQc4Q9/tKXAs/V03Lb8NB4WNyyG', // Test123
+            'role' => 'owner'
+        ])->markEmailAsVerified();
     }
 
     /**
