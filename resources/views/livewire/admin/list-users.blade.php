@@ -40,18 +40,26 @@
                                     </span>
                                 </div>
 
-                                <div class="inline-block ml-3" wire:key="delete-btn-{{ $user->id }}">
-                                    <button class="text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 font-bold cursor-pointer"
-                                            wire:click="deleteUser('{{ $user->id }}')"
-                                            wire:loading.attr="disabled"
-                                            wire:target="deleteUser"
-                                            wire:loading.remove>
-                                        Törlés
-                                    </button>
-                                    <span wire:loading wire:target="deleteUser" class="text-red-500">
-                                        Törlés...
-                                    </span>
-                                </div>
+                                @if($user->id != Auth::id())
+                                    <div class="inline-block ml-3" wire:key="delete-btn-{{ $user->id }}">
+                                        <button class="text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 font-bold cursor-pointer"
+                                                wire:click="deleteUser('{{ $user->id }}')"
+                                                wire:loading.attr="disabled"
+                                                wire:target="deleteUser"
+                                                wire:loading.remove>
+                                            Törlés
+                                        </button>
+                                        <span wire:loading wire:target="deleteUser" class="text-red-500">
+                                            Törlés...
+                                        </span>
+                                    </div>
+                                @else
+                                    <div class="inline-block ml-3" wire:key="delete-btn-{{ $user->id }}">
+                                        <button class="text-zinc-600 hover:text-red-500 dark:text-zinc-400 opacity-50 dark:hover:text-red-300 font-bold cursor-pointer">
+                                            Nem törölhető
+                                        </button>
+                                    </div>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
