@@ -43,7 +43,7 @@
                     <input type="hidden" wire:model="role" name="role" x-model="selected_role">
                 </div>
                 <div class="flex flex-row justify-end">
-                    <flux:button wire:click="toggleCreateUserForm()" class="cursor-pointer" style="background-color: transparent; border: none; font-weight: bold">Bezárás</flux:button>
+                    <flux:button wire:click="toggleCreateUserForm()" class="cursor-pointer" style="border: none; box-shadow: none; font-weight: bold;">Bezárás</flux:button>
                     <flux:button type="submit" class="cursor-pointer ms-3" style="z-index: 1">Létrehozás</flux:button>
                 </div>
             </form>
