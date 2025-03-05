@@ -55,7 +55,7 @@
                                     </div>
                                 @else
                                     <div class="inline-block ml-3" wire:key="delete-btn-{{ $user->id }}">
-                                        <button class="text-zinc-600 hover:text-red-500 dark:text-zinc-400 opacity-50 dark:hover:text-red-300 font-bold cursor-pointer">
+                                        <button class="text-zinc-600 hover:text-red-500 dark:text-zinc-400 opacity-50 dark:hover:text-zinc-300 font-bold cursor-pointer">
                                             Nem törölhető
                                         </button>
                                     </div>
