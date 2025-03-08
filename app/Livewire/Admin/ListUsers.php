@@ -1,24 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Admin;
 
 use App\Models\User;
-use Livewire\Component;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
 use Livewire\WithPagination;
 
-class ListUsers extends Component
+final class ListUsers extends Component
 {
     use WithPagination;
 
     public array $status = [
-        'success' => "",
-        'error' => "",
+        'success' => '',
+        'error' => '',
     ];
 
+    public array $loadingUsers = [];
+
     protected int $auth;
-    public array $loadingUsers = []; // Itt tároljuk, mely felhasználók művelet alatt állnak
 
     public function mount()
     {
@@ -28,47 +31,65 @@ class ListUsers extends Component
     public function render()
     {
         return view('livewire.admin.list-users', [
-            'users' => User::paginate(10)
+            'users' => User::paginate(10),
         ]);
     }
 
-    public function deleteUser($userId)
+    public function deleteUser($user_id)
     {
-        $this->loadingUsers[$userId] = true; // Indítás előtt beállítjuk
-        $this->mount();
+        $user_id = (int)$user_id;
+        $this->setLoading($user_id, true);
+
+        if (! $this->canDeleteUser($user_id)) {
+            $this->setStatus(error: 'Nem törölheted a saját felhasználói fiókodat!');
+
+            return;
+        }
 
         try {
-            $user = User::findOrFail($userId);
-            if ($user->id === $this->auth) {
-                $this->status = [
-                    'success' => "",
-                    'error' => "Nem törölheted a saját felhasználói fiókodat!"
-                ];
-                return;
-            }
-
-            $username = $user->name;
-            $user->delete();
-            $this->status = [
-                'success' => "A felhasználó [{$username}] fiókja sikeresen törlésre került!",
-                'error' => ""
-            ];
-        } catch (\Exception $e) {
-            $this->status = [
-                'success' => "",
-                'error' => "Hiba történt a felhasználói fiók törlése közben: {$e->getMessage()}"
-            ];
+            $this->deleteUserById($user_id);
+        } catch (Exception $e) {
+            $this->setStatus(error: "Hiba történt a felhasználói fiók törlése közben: {$e->getMessage()}");
         } finally {
-            unset($this->loadingUsers[$userId]);
+            $this->setLoading($user_id, false);
         }
     }
 
-    public function editUser($userId)
+    public function editUser($user_id)
     {
-        $this->loadingUsers[$userId] = true;
+        $user_id = (int)$user_id;
+        $this->setLoading($user_id, true);
 
-        // Itt lehet egy szerkesztő modal megnyitása vagy hasonló művelet
+        $this->dispatch('admin.edit_user', $user_id);
 
-        unset($this->loadingUsers[$userId]);
+        $this->setLoading($user_id, false);
+    }
+
+    protected function deleteUserById(int $user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $username = $user->name;
+        $user->delete();
+
+        $this->setStatus(success: "A felhasználó [{$username}] fiókja sikeresen törlésre került!");
+    }
+
+    protected function canDeleteUser(int $user_id): bool
+    {
+        return $user_id !== $this->auth;
+    }
+
+    protected function setStatus(string $success = '', string $error = '')
+    {
+        $this->status = compact($success, $error);
+    }
+
+    protected function setLoading(int $user_id, bool $status)
+    {
+        if ($status) {
+            $this->loadingUsers[$user_id] = true;
+        } else {
+            unset($this->loadingUsers[$user_id]);
+        }
     }
 }

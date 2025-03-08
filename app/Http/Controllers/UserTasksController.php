@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
-use App\Models\UserTasks;
 use App\Http\Requests\StoreUserTasksRequest;
 use App\Http\Requests\UpdateUserTasksRequest;
+use App\Models\UserTasks;
 
-class UserTasksController extends Controller
+final class UserTasksController extends Controller
 {
     /**
      * Display a listing of the resource.

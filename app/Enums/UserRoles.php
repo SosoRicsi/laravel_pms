@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum UserRoles: string
@@ -14,11 +16,11 @@ enum UserRoles: string
     public static function list(): array
     {
         $array = [];
-        //$array = array_column(self::cases(), 'value');
+        // $array = array_column(self::cases(), 'value');
         foreach (self::cases() as $case) {
             $array[] = [
                 'value' => $case,
-                'display' => $case->display()
+                'display' => $case->display(),
             ];
         }
 
@@ -33,7 +35,7 @@ enum UserRoles: string
             'moderator' => self::MODERATOR->value,
             'partner' => self::PARTNER->value,
             'worker' => self::PARTNER->value,
-            'user' => self::USER->value
+            'user' => self::USER->value,
         ];
     }
 

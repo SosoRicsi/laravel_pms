@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Enums\UserRoles;
@@ -7,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
-class GatesProvider extends ServiceProvider
+final class GatesProvider extends ServiceProvider
 {
     /**
      * Register services.

@@ -28,36 +28,18 @@
                             <td class="py-3 px-6">{{ $user->role->display() }}</td>
                             <td class="py-3 px-6 text-right">
                                 <div class="inline-block" wire:key="edit-btn-{{ $user->id }}">
-                                    <button class="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 font-bold cursor-pointer"
-                                            wire:click="editUser('{{ $user->id }}')"
-                                            wire:loading.attr="disabled"
-                                            wire:target="editUser"
-                                            wire:loading.remove>
-                                        Szerkesztés
-                                    </button>
-                                    <span wire:loading wire:target="editUser('{{ $user->id }}')" class="text-blue-500">
-                                        Szerkesztés...
-                                    </span>
+                                    <button class="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 font-bold cursor-pointer" wire:click="editUser('{{ $user->id }}')" wire:loading.attr="disabled" wire:target="editUser" wire:loading.remove>Szerkesztés</button>
+                                    <span wire:loading wire:target="editUser({{ $user->id }})" class="text-blue-500">Szerkesztés...</span>
                                 </div>
 
                                 @if($user->id != Auth::id())
                                     <div class="inline-block ml-3" wire:key="delete-btn-{{ $user->id }}">
-                                        <button class="text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 font-bold cursor-pointer"
-                                                wire:click="deleteUser('{{ $user->id }}')"
-                                                wire:loading.attr="disabled"
-                                                wire:target="deleteUser"
-                                                wire:loading.remove>
-                                            Törlés
-                                        </button>
-                                        <span wire:loading wire:target="deleteUser" class="text-red-500">
-                                            Törlés...
-                                        </span>
+                                        <button class="text-red-600 hover:text-red-500 dark:text-red-400 dark:hover:text-red-300 font-bold cursor-pointer" wire:click="deleteUser('{{ $user->id }}')" wire:loading.attr="disabled" wire:target="deleteUser" wire:loading.remove>Törlés</button>
+                                        <span wire:loading wire:target="deleteUser" class="text-red-500">Törlés...</span>
                                     </div>
                                 @else
                                     <div class="inline-block ml-3" wire:key="delete-btn-{{ $user->id }}">
-                                        <button class="text-zinc-600 hover:text-red-500 dark:text-zinc-400 opacity-50 dark:hover:text-zinc-300 font-bold cursor-pointer">
-                                            Nem törölhető
-                                        </button>
+                                        <button class="text-zinc-600 hover:text-red-500 dark:text-zinc-400 opacity-50 dark:hover:text-zinc-300 font-bold cursor-pointer">Nem törölhető</button>
                                     </div>
                                 @endif
                             </td>

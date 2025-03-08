@@ -1,19 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Admin;
 
-use App\Models\User;
-use Livewire\Component;
 use App\Enums\UserRoles;
+use App\Models\User;
+use Exception;
 use Illuminate\Validation\Rules\Password;
-use App\Http\Requests\UserCreationRequest;
-use Illuminate\Support\Facades\Hash;
+use Livewire\Component;
 
-class CreateNewUser extends Component
+final class CreateNewUser extends Component
 {
-    public array $user_roles, $status;
+    public array $user_roles;
 
-    public string $email = "", $password = "", $confirm_password = "", $name = "", $role = "";
+    public array $status;
+
+    public string $email = '';
+
+    public string $password = '';
+
+    public string $confirm_password = '';
+
+    public string $name = '';
+
+    public string $role = '';
 
     public bool $show_create_user_form = false;
 
@@ -39,7 +50,7 @@ class CreateNewUser extends Component
         $this->user_roles = UserRoles::list();
         $this->status = [
             'created' => false,
-            'user' => ""
+            'user' => '',
         ];
     }
 
@@ -52,10 +63,10 @@ class CreateNewUser extends Component
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', Password::defaults()],
             'confirm_password' => ['required', 'same:password'],
-            'role' => ['required', 'in:' . UserRoles::implode(",") . ''],
+            'role' => ['required', 'in:'.UserRoles::implode(',').''],
         ];
     }
 
@@ -63,10 +74,10 @@ class CreateNewUser extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', Password::defaults()],
             'confirm_password' => ['required', 'same:password'],
-            'role' => ['required', 'in:' . UserRoles::implode(",") . ''],
+            'role' => ['required', 'in:'.UserRoles::implode(',').''],
         ]);
 
         try {
@@ -74,15 +85,15 @@ class CreateNewUser extends Component
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'password' => $validated['password'],
-                'role' => UserRoles::from($validated['role'])
+                'role' => UserRoles::from($validated['role']),
             ]);
 
             $this->status = [
                 'created' => true,
-                'user' => $new_user->name
+                'user' => $new_user->name,
             ];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             dd($e->getMessage());
         }
 
@@ -90,7 +101,6 @@ class CreateNewUser extends Component
 
     public function toggleCreateUserForm()
     {
-        $this->show_create_user_form = !$this->show_create_user_form;
+        $this->show_create_user_form = ! $this->show_create_user_form;
     }
-
 }
