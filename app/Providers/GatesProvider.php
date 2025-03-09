@@ -29,19 +29,19 @@ final class GatesProvider extends ServiceProvider
         });
 
         Gate::define('moderator', function () {
-            return Auth::user()->role === UserRoles::MODERATOR;
+            return Auth::user()->role === UserRoles::MODERATOR || Auth::user()->role === UserRoles::OWNER;
         });
 
         Gate::define('partner', function () {
-            return Auth::user()->role === UserRoles::PARTNER;
+            return Auth::user()->role === UserRoles::PARTNER || Auth::user()->role === UserRoles::OWNER;
         });
 
         Gate::define('worker', function () {
-            return Auth::user()->role === UserRoles::WORKER;
+            return Auth::user()->role === UserRoles::WORKER || Auth::user()->role === UserRoles::OWNER;
         });
 
         Gate::define('user', function () {
-            return Auth::user()->role === UserRoles::USER;
+            return Auth::user()->role === UserRoles::USER || Auth::user()->role === UserRoles::OWNER;
         });
     }
 }
