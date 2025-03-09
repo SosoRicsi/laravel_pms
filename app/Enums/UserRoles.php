@@ -55,4 +55,16 @@ enum UserRoles: string
             self::USER => 'Felhasználó',
         };
     }
+
+    public function level(): int
+    {
+        return match($this) {
+            self::OWNER => 6,
+            self::ADMIN => 5,
+            self::MODERATOR => 4,
+            self::PARTNER => 3,
+            self::WORKER => 2,
+            self::USER => 1
+        };
+    }
 }

@@ -24,24 +24,10 @@ final class GatesProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('admin', function () {
-            return Auth::user()->role === UserRoles::ADMIN || Auth::user()->role === UserRoles::OWNER;
-        });
-
-        Gate::define('moderator', function () {
-            return Auth::user()->role === UserRoles::MODERATOR || Auth::user()->role === UserRoles::OWNER;
-        });
-
-        Gate::define('partner', function () {
-            return Auth::user()->role === UserRoles::PARTNER || Auth::user()->role === UserRoles::OWNER;
-        });
-
-        Gate::define('worker', function () {
-            return Auth::user()->role === UserRoles::WORKER || Auth::user()->role === UserRoles::OWNER;
-        });
-
-        Gate::define('user', function () {
-            return Auth::user()->role === UserRoles::USER || Auth::user()->role === UserRoles::OWNER;
-        });
+        foreach (UserRoles::cases() as $role) {
+            Gate::define(strtolower($role->value), function () use ($role) {
+                return Auth::user()->role->level() >= $role->level();
+            });
+        }
     }
 }
