@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\ManageUsersController;
+use App\Http\Controllers\SimpleTasksController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -22,8 +23,8 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
 
-Route::middleware(['password.confirm', 'can:admin'])->group(function () {
-    Route::get('/mange-users', [ManageUsersController::class, 'index'])->name('manage-users');
+Route::middleware(['password.confirm', 'can:admin', 'auth', 'verified'])->group(function () {
+    Route::view('/mange-users', 'admin.manage-users')->name('manage-users');
 });
 
 require __DIR__.'/auth.php';
