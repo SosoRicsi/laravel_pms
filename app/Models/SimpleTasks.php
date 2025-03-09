@@ -18,7 +18,7 @@ class SimpleTasks extends Model
      *
      * @return BelongsTo
      */
-    public function user(): BelongsTo
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
