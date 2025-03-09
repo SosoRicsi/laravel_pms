@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\UserRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -45,7 +46,7 @@ final class User extends Authenticatable implements MustVerifyEmail
     {
         return Str::of($this->name)
             ->explode(' ')
-            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
+            ->map(fn(string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
 
@@ -61,5 +62,15 @@ final class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
             'role' => UserRoles::class,
         ];
+    }
+
+    /**
+     * Get the user's simple tasks (todos).
+     *
+     * @return HasMany
+     */
+    public function simple_tasks(): HasMany
+    {
+        return $this->hasMany(SimpleTasks::class);
     }
 }
