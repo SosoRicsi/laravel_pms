@@ -24,7 +24,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['password.confirm', 'can:admin', 'auth', 'verified'])->group(function () {
-    Route::view('/mange-users', 'admin.manage-users')->name('manage-users');
+    Route::view('/mange-users', 'dashboard.admin.manage-users')->name('manage-users');
 });
+
+Volt::route('/todos', 'dashboard.todo.show')->name('todos.index');
 
 require __DIR__.'/auth.php';
