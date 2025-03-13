@@ -14,7 +14,7 @@
             <flux:navlist variant="inline">
                 <flux:navlist.group heading="{{ __('Platform') }}" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Főoldal') }}</flux:navlist.item>
-                    <flux:navlist.item icon="list-check" :href="route('dashboard')" :current="request()->routeIs('dashboard.tasks')" wire:navigate>{{ __('Feladatok') }}</flux:navlist.item>
+                    <flux:navlist.item icon="list-check" :href="route('todos.index')" :current="request()->routeIs('todos.index')" wire:navigate>{{ __('Feladatok') }}</flux:navlist.item>
                     <flux:navlist.item icon="contact-round" :href="route('dashboard')" :current="request()->routeIs('dashboard.contacts')" wire:navigate>{{ __('Névjegyek') }}</flux:navlist.item>
                 </flux:navlist.group>
 
