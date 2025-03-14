@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Gate;
  */
 new class extends Component {
 
+    public string $title = "";
+
     /**
      * Validation error messages
      *
@@ -52,6 +54,7 @@ new class extends Component {
             'title' => $validated['title']
         ]);
 
+        $this->title = "";
         $this->dispatch('todos.reload_table');
     }
 }; ?>
