@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\ManageUsersController;
-use App\Http\Controllers\SimpleTasksController;
-use Illuminate\Auth\Access\Gate;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
