@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Gate;
  */
 new class extends Component {
 
+    /**
+     * @var string $title SimpleTask title
+     */
     public string $title = "";
 
     /**
-     * Validation error messages
-     *
-     * @var array<string, string>
+     * @var array<string, string> Validation error messages
      */
     protected $messages = [
         'title.required' => "Nem hagyhatod üresen a mezőt!",
@@ -24,9 +25,7 @@ new class extends Component {
     ];
 
     /**
-     * Validation rules.
-     *
-     * @var array<string, mixed>
+     * @var array<string, mixed> Validation rules
      */
     protected $rules = [
         'title' => [
