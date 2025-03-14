@@ -6,26 +6,46 @@ use Livewire\Volt\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
 
-new #[Layout('layouts.app')] class extends Component {
+/**
+ * Livewire Volt component for loading & listing the authenticated user's SimpleTasks.
+ */
+new class extends Component {
+
+    /**
+     * @var Collection $completed_tasks Collection of completed tasks.
+     * @var Collection $pending_tasks Collection of pending tasks.
+     */
     public Collection $completed_tasks, $pending_tasks;
 
+    /**
+     * @var string $error String to contain the validation errors.
+     */
     public string $error = '';
-
-    public string $title = "Feladatok";
 
     public function mount()
     {
         $this->getUserTasks();
     }
 
+    /**
+     * Function to get the user's SimpleTasks.
+     *
+     * @return void
+     */
     #[On('todos.reload_table')]
-    public function getUserTasks()
+    public function getUserTasks(): void
     {
         $this->completed_tasks = Auth::user()->simple_tasks->where('status', true);
         $this->pending_tasks = Auth::user()->simple_tasks->where('status', false);
     }
 
-    public function markDone(int $task_id)
+    /**
+     * Function to mark a task as done.
+     *
+     * @param int $task_id The markable task's id.
+     * @return void
+     */
+    public function markDone(int $task_id): void
     {
         $task = SimpleTasks::with('owner')->find($task_id);
         if ($task->owner->id != Auth::id()) {
@@ -43,7 +63,13 @@ new #[Layout('layouts.app')] class extends Component {
         }
     }
 
-    public function markPending(int $task_id)
+    /**
+     * Function to mark a task as pending.
+     *
+     * @param int $task_id The markable task's id.
+     * @return void
+     */
+    public function markPending(int $task_id): void
     {
         $task = SimpleTasks::with('owner')->find($task_id);
 
