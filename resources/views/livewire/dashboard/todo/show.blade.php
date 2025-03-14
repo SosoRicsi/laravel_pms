@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\SimpleTasks;
+use Livewire\Attributes\On;
 use Livewire\Volt\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,6 +18,7 @@ new #[Layout('layouts.app')] class extends Component {
         $this->getUserTasks();
     }
 
+    #[On('todos.reload_table')]
     public function getUserTasks()
     {
         $this->completed_tasks = Auth::user()->simple_tasks->where('status', true);
@@ -62,6 +64,7 @@ new #[Layout('layouts.app')] class extends Component {
 }; ?>
 
 <div>
+    <livewire:dashboard.todo.create />
     <x-form.message-box type="{{ $error === '' ? '' : 'error' }}">{{ $error }}</x-form.message-box>
     @if ($pending_tasks->isNotEmpty())
         <table class="w-[750px] mx-auto bg-white text-black dark:bg-zinc-700 dark:text-white rounded-lg shadow-md mb-5" wire:poll.5s>
