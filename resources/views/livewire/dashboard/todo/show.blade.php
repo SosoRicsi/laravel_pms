@@ -67,7 +67,7 @@ new #[Layout('layouts.app')] class extends Component {
     <livewire:dashboard.todo.create />
     <x-form.message-box type="{{ $error === '' ? '' : 'error' }}">{{ $error }}</x-form.message-box>
     @if ($pending_tasks->isNotEmpty())
-        <table class="w-[750px] mx-auto bg-white text-black dark:bg-zinc-700 dark:text-white rounded-lg shadow-md mb-5" wire:poll.5s>
+        <table class="w-3xl md-w-lg mx-auto bg-white text-black dark:bg-zinc-700 dark:text-white rounded-lg shadow-md mb-5" wire:poll.5s>
             <thead>
                 <tr class="bg-zinc-200 text-2xl text-black dark:bg-zinc-700 dark:text-white text-center">
                     <th class="py-3 px-6" colspan="2">Nem Elkészült Feladatok</th>
@@ -87,7 +87,7 @@ new #[Layout('layouts.app')] class extends Component {
     @endif
 
     @if ($completed_tasks->isNotEmpty())
-        <table class="w-[750px] mx-auto bg-white text-black dark:bg-zinc-700 dark:text-white rounded-lg shadow-md mt-5" wire:poll.5s>
+        <table class="w-3xl md-w-lg mx-auto bg-white text-black dark:bg-zinc-700 dark:text-white rounded-lg shadow-md mt-5" wire:poll.5s>
             <thead>
                 <tr class="bg-zinc-200 text-2xl text-black dark:bg-zinc-700 dark:text-white text-center">
                     <th class="py-3 px-6" colspan="2">Elkészült Feladatok</th>
