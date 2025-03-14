@@ -5,15 +5,27 @@ use Livewire\Volt\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
+/**
+ * Livewire Volt component for creating a new SimpleTask.
+ */
 new class extends Component {
-    public string $title = "";
 
+    /**
+     * Validation error messages
+     *
+     * @var array<string, string>
+     */
     protected $messages = [
         'title.required' => "Nem hagyhatod üresen a mezőt!",
         'title.min' => "A címnek minimum :min karakterből kell álnia!",
         'title.max' => "A cím nem lehet hosszabb :max karakternél!"
     ];
 
+    /**
+     * Validation rules.
+     *
+     * @var array<string, mixed>
+     */
     protected $rules = [
         'title' => [
             'required',
@@ -23,7 +35,15 @@ new class extends Component {
         ]
     ];
 
-    public function create()
+    /**
+     * Function to create a new SimpleTask.
+     * ----------------------------------------
+     * After successfull validation, a new task is created for the authenticated user.
+     * Once created, a Livewire event is dispatched to refresh the table.
+     *
+     * @return void
+     */
+    public function create(): void
     {
         $validated = $this->validate();
 
